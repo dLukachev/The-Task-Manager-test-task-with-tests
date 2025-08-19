@@ -2,6 +2,7 @@ from uuid import UUID
 from src.db.base import get_db
 from src.db.models import Task
 from sqlalchemy.orm import Session
+from src.func.create_task import VALID_STATUSES
 
 def edit_task(task_data: dict, db: Session = next(get_db())) -> Task | str:
     """
@@ -25,6 +26,9 @@ def edit_task(task_data: dict, db: Session = next(get_db())) -> Task | str:
     task_id = task_data.get('id')
     if not task_id:
         return 'Task ID is required for editing a task.'
+    
+    if task_data.get('status') not in VALID_STATUSES:
+        return 'Invalid status provided. Valid statuses are: ' + ', '.join(VALID_STATUSES)
 
     try:
         task_uuid = UUID(task_id)

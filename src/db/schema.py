@@ -16,11 +16,11 @@ class Task(BaseModel):
     id: UUID
     title: str
     description: str
-    status: str
+    status: str 
     user_id: int
 
 class TaskCreate(BaseModel):
     title: str
     description: str
-    status: str = "pending"
+    status: str = "create"
     user_id: int

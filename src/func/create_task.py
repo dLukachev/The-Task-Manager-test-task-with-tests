@@ -2,7 +2,9 @@ from src.db.base import get_db
 from src.db.models import Task
 from sqlalchemy.orm import Session
 
-def create_task(task_data: dict, db: Session = next(get_db())) -> Task:
+VALID_STATUSES = ['create', 'in work', 'closed']
+
+def create_task(task_data: dict, db: Session = next(get_db())) -> Task | None:
     """
     Create a new task in the database.
 
@@ -13,6 +15,10 @@ def create_task(task_data: dict, db: Session = next(get_db())) -> Task:
     Returns:
         Task: The created task object.
     """
+
+    if task_data.get('status') not in VALID_STATUSES:
+        return None
+
     new_task = Task(**task_data)
     db.add(new_task)
     db.commit()
