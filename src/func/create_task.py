@@ -1,7 +1,6 @@
 from src.db.base import get_db
 from src.db.models import Task
 from sqlalchemy.orm import Session
-from sqlalchemy import UUID
 
 def create_task(task_data: dict, db: Session = next(get_db())) -> Task:
     """

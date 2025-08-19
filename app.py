@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from src.db.base import base, engine
+
+from src.api.v1.users import router as users_router
     
 app = FastAPI(title="Task Manager API", version="1.0.0")
 
@@ -24,3 +26,5 @@ async def startup_event():
 def shutdown_event():
     with open("log.txt", mode="a") as log:
         log.write("Application shutdown")
+
+app.include_router(users_router)

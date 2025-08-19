@@ -1,8 +1,9 @@
 from src.db.base import get_db
 from src.db.models import User
 from sqlalchemy.orm import Session
+from fastapi import HTTPException
 
-def create_user(username: str, email: str, db: Session = next(get_db())) -> User:
+def create_user(username: str, email: str, db: Session = next(get_db())) -> User | None:
     """
     Create a new user in the database.
 
@@ -17,7 +18,7 @@ def create_user(username: str, email: str, db: Session = next(get_db())) -> User
 
     db.query(User).filter((User.username == username) | (User.email == email)).first()
     if db.query(User).filter((User.username == username) | (User.email == email)).first():
-        raise ValueError(f"User with username '{username}' or email '{email}' already exists.")
+        return None
 
     new_user = User(username=username, email=email)
     db.add(new_user)

@@ -2,7 +2,7 @@ from src.db.base import get_db
 from src.db.models import User
 from sqlalchemy.orm import Session
 
-def get_user(user_id: int, db: Session = next(get_db())) -> User:
+def get_user(user_id: int, db: Session = next(get_db())) -> User | None:
     """
     Retrieve a user by their ID from the database.
 
@@ -15,5 +15,5 @@ def get_user(user_id: int, db: Session = next(get_db())) -> User:
     """
     user = db.query(User).filter(User.id == user_id).first()
     if not user:
-        raise ValueError(f"User with id {user_id} does not exist.")
+        return None
     return user

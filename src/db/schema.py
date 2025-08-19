@@ -1,8 +1,8 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from sqlalchemy import UUID
 
 class User(BaseModel):
-    id: UUID
+    id: int
     username: str
     email: str
 
@@ -11,6 +11,8 @@ class UserCreate(BaseModel):
     email: str
 
 class Task(BaseModel):
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
     id: UUID
     title: str
     description: str

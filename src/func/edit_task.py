@@ -3,7 +3,7 @@ from src.db.models import Task
 from sqlalchemy.orm import Session
 from sqlalchemy import UUID
 
-def edit_task(task_data: dict, db: Session = next(get_db())) -> Task:
+def edit_task(task_data: dict, db: Session = next(get_db())) -> Task | str:
     """
     Edit an existing task in the database.
 
@@ -24,11 +24,11 @@ def edit_task(task_data: dict, db: Session = next(get_db())) -> Task:
     """
     task_id = task_data.get('id')
     if not task_id:
-        raise ValueError("Task ID is required for editing a task")
+        return 'Task ID is required for editing a task.'
 
     task = db.query(Task).filter(Task.id == UUID(task_id)).first()
     if not task:
-        raise ValueError(f"Task with id {task_id} not found")
+        return 'Task not found.'
 
     for key, value in task_data.items():
         setattr(task, key, value)
