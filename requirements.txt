@@ -1,0 +1,5 @@
+fastapi
+uvicorn
+getgauge
+sqlalchemy
+python-dotenv
