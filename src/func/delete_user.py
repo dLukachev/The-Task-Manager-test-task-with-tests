@@ -1,7 +1,6 @@
 from src.db.base import get_db
 from src.db.models import User
 from sqlalchemy.orm import Session
-from fastapi import HTTPException
 
 def delete_user(user_id: int, db: Session = next(get_db())) -> bool:
     """
