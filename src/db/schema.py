@@ -1,5 +1,5 @@
 from pydantic import BaseModel, ConfigDict
-from sqlalchemy import UUID
+from uuid import UUID
 
 class User(BaseModel):
     id: int

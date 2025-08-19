@@ -20,4 +20,4 @@ def delete_task(task_id: UUID, db: Session = next(get_db())) -> None | bool:
 
     db.delete(task)
     db.commit()
-    return None
+    return True

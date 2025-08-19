@@ -1,7 +1,7 @@
+from uuid import UUID
 from src.db.base import get_db
 from src.db.models import Task
 from sqlalchemy.orm import Session
-from sqlalchemy import UUID
 
 def edit_task(task_data: dict, db: Session = next(get_db())) -> Task | str:
     """
@@ -26,13 +26,19 @@ def edit_task(task_data: dict, db: Session = next(get_db())) -> Task | str:
     if not task_id:
         return 'Task ID is required for editing a task.'
 
-    task = db.query(Task).filter(Task.id == UUID(task_id)).first()
-    if not task:
-        return 'Task not found.'
+    try:
+        task_uuid = UUID(task_id)
+        task = db.query(Task).filter_by(id=task_uuid).first()
+        if not task:
+            return 'Task not found.'
 
-    for key, value in task_data.items():
-        setattr(task, key, value)
+        task_data.pop('id', None)
+        
+        for key, value in task_data.items():
+            setattr(task, key, value)
 
-    db.commit()
-    db.refresh(task)
-    return task
+        db.commit()
+        db.refresh(task)
+        return task
+    except ValueError:
+        return 'Invalid UUID format'
