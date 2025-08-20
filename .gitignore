@@ -20,9 +20,6 @@ __pycache__/
 .log.txt
 
 alembic.ini
-migrations/
 
 .vscode
 .vscode-test
-
-tests/
