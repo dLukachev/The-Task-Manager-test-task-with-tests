@@ -1,22 +1,22 @@
 def test_create_user(client):
     response = client.post("/users/", json={
-        "username": "testuser_pytest",
-        "email": "testuser@mail.ru"
+        "username": "testuser_pytest_create",
+        "email": "testuser_create@mail.ru"
     })
     assert response.status_code == 200
     assert response.json() == {
-        "id": 1,
-        "username": "testuser_pytest",
-        "email": "testuser@mail.ru"
+        "id": 2,
+        "username": "testuser_pytest_create",
+        "email": "testuser_create@mail.ru"
     }
 
-def test_get_user(client, user_id=1):
+def test_get_user(client, user_id=2):
     response = client.get(f"/users/{user_id}")
     assert response.status_code == 200
     assert response.json() == {
         "id": user_id,
-        "username": "testuser_pytest",
-        "email": "testuser@mail.ru"
+        "username": "testuser_pytest_create",
+        "email": "testuser_create@mail.ru"
         }
 
 def test_put_user(client, user_id=1):
