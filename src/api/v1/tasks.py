@@ -27,6 +27,10 @@ def get_task(task_id: UUID, db: Session = Depends(get_db)):
 
 @router.put("/tasks/{task_id}", response_model=Task)
 def edit_task(task_id: UUID, task: TaskCreate, db: Session = Depends(get_db)):
+    task = get_task_func(task_id, db) # type: ignore
+    if not task:
+        raise HTTPException(status_code=404,
+                            detail="Task not found.")
     task_data = task.model_dump()
     task_data['id'] = str(task_id)
     updated_task = edit_task_func(task_data, db)

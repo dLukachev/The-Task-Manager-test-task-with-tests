@@ -1,6 +1,7 @@
 fastapi
 uvicorn
-getgauge
+pytest
 sqlalchemy
 python-dotenv
 alembic
+httpx
