@@ -34,6 +34,12 @@ CRUD операции для управления задачами: создан
    ```
    pip install -r requirements.txt
    ```
+
+3. Примените миграции:
+    ```
+    alembic upgrade head
+    ```
+
 3. Запустите приложение:
    ```
    uvicorn app:app --reload
